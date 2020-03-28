@@ -2,7 +2,7 @@
 React Native Food List Using Firebase
 
 # Features
-Login
-Signup
-Food Item Add/Remote
-Firebase
+1. Login
+2. Signup
+3. Food Item Add/Remote
+4. Firebase
