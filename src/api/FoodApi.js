@@ -1,16 +1,17 @@
 import firebase from '../../environment/config';
 import 'firebase/firestore';
 
-export function addFood(food, addComplete) {
+export async function addFood(food, addComplete) {
 
-    firebase.firestore()
+    await firebase.firestore()
     .collection('Foods')
     .add({
         name: food.name,
         color: food.color,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
-    .then((data) => addComplete(data))
+    .then((snapshot) => snapshot.get())
+    .then((foodData) => addComplete(foodData.data()))
     .catch((error) => console.log(error));
 }
 
@@ -25,7 +26,6 @@ export async function getFoods(foodsRetrieved) {
     .get()
     .catch((error) => console.log(error));
 
-    console.log(snapshot)
     snapshot.forEach((doc) => {
         foodList.push(doc.data());
     });

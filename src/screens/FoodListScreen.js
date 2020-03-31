@@ -16,7 +16,9 @@ class FoodListScreen extends Component {
 
     onFoodAdded = (food) => {
         console.log("Food added.");
-        console.log(food);
+        this.setState(prevState => ({
+            foodList: [...prevState.foodList, food]
+        }));
     }
 
     onFoodsRetrieved = (foodList) => {
@@ -46,11 +48,14 @@ class FoodListScreen extends Component {
                         title="Submit"
                         style={styles.button}
                         onPress={() => {
-                            addFood({
-                                name: this.state.currentFoodItem,
-                                color: this.colors[Math.floor(Math.random() * this.colors.length)]
-                            }),
-                            this.onFoodAdded
+                            
+                            addFood(
+                                {
+                                    name: this.state.currentFoodItem,
+                                    color: this.colors[Math.floor(Math.random() * this.colors.length)]
+                                },
+                                this.onFoodAdded
+                            )
                         }}
                     />
                 </View>
@@ -58,8 +63,8 @@ class FoodListScreen extends Component {
                     data={this.state.foodList}
                     ItemSeparatorComponent={() => <Divider style={styles.divider}/>}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={(item) => {
-                        console.log(item);
+                    renderItem={({item}) => {
+                        
                         return (
                             <ListItem
                                 title={item.name}
